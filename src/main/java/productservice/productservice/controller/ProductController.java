@@ -36,12 +36,12 @@ public class ProductController {
         return new ResponseEntity<ProductDTO>(dto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/product/{id}")
-    public ResponseEntity<?> getProduct(@PathVariable String id) {
-        ProductDTO dto = productService.findById(id);
+    @GetMapping("/product/{productNumber}")
+    public ResponseEntity<?> getStockAmount(@PathVariable String productNumber) {
+        ProductDTO dto = productService.findByProductNumber(productNumber);
         if (dto == null) return new ResponseEntity<String>("Product not found", HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<ProductDTO>(dto, HttpStatus.OK);
+        return new ResponseEntity<Integer>(dto.getStock().getQuantity(), HttpStatus.OK);
     }
 
     @DeleteMapping("/product/{id}")
