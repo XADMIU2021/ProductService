@@ -23,6 +23,9 @@ public class ProductService {
     @Autowired
     private ProductDomainService domainService;
 
+    @Autowired
+    private CustomLoggerService loggerService;
+
     public ProductDTO save(ProductDTO dto) {
         Product product = adapterService.getProductFromDTO(dto);
         repository.save(product);
@@ -59,5 +62,6 @@ public class ProductService {
 
         products = domainService.recalculateQuantityInStock(event, products);
         repository.saveAll(products);
+        loggerService.log("Stock quantity updated after placement for products length :  " + products.size());
     }
 }
